@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+
+  </body>
+  <script>
+    // 计算阶乘的递归函数
+    function factorial(n) {
+      if (n <= 1) return 1;
+      return n * factorial(n - 1)
+    }
+
+    console.log(factorial(6));
+
+    function distance(x1, y1, x2, y2) {
+      let dx = x2 - x1;
+      let dy = y2 - y1;
+      return Math.sqrt(dx * dx + dy * dy)
+    }
+
+    console.log(distance(2, 3, 4, 5));
+
+    let r = (function(x1, y1, x2, y2) {
+      let dx = x2 - x1;
+      let dy = y2 - y1;
+      return Math.sqrt(dx * dx + dy * dy)
+    })(2, 3, 4, 5)
+    console.log(r);
+
+    var square = function(x) {
+      return x * x
+    }
+    console.log(Object.prototype.toString.call(square));
+
+    let calculator = {
+      operand1: 3,
+      operand2: 5,
+
+      add: function () {
+        return this.operand1 + this.operand2
+      }
+    }
+
+    console.log(calculator.add());
+    console.log(Object.keys(calculator));
+
+    let objTest = {
+      m: function() {
+        var self = this;
+        console.log(this === objTest);
+        f();
+
+        // 如果嵌套函数作为方法调用，this 指向调用它的对象
+        // 如果嵌套函数作为函数调用，this 在非严格模式下指向全局对象，在严格模式下指向undefined
+        function f() {
+          console.log(this);
+          console.log(this === objTest);
+          console.log(self === objTest);
+        }
+      }
+    }
+
+    objTest.m()
+    // (functionn(){
+    //   console.log(2);
+    // }())
+
+  </script>
+</html>

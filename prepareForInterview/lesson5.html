@@ -1,0 +1,162 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script type="text/javascript">
+    let scope = 'global scope'
+    function checkscope() {
+      let scope = 'local scope';
+      function f() {
+        return scope;
+      }
+      return f;
+    }
+    // checkscope()()
+    console.log(checkscope()());
+    console.log(scope);
+
+    uniqueInteger.counter = 0;
+    function uniqueInteger() {
+      return uniqueInteger.counter ++;
+    }
+    uniqueInteger()
+    uniqueInteger()
+    console.log(uniqueInteger());
+
+    var uniqueIntegerOptimize = (function(){
+      var counter = 0;
+      return function() {
+        counter ++;
+        console.log(counter);
+      }
+    })()
+    console.log(uniqueIntegerOptimize());
+
+    function counterTest() {
+      var n = 0;
+      return {
+        add: function() {
+          return n ++;
+        },
+        reset: function() {
+          return n = 0;
+        }
+      }
+    }
+    var zn = counterTest()
+    var lp = counterTest()
+
+    console.log(zn.add());
+    console.log(zn.add());
+    console.log(lp.add());
+    console.log(zn.reset());
+    console.log(lp.add());
+
+    function addPrivateProperty(o, name, predicate/*判定函数*/) {
+      var value;
+
+      o['get' + name] = function() {
+        return value
+      }
+
+      o['set' + name] = function(v) {
+        if (predicate && !predicate(v)) {
+          throw Error('set' + name + ': invalid value' + v);
+        } else {
+          value = v
+        }
+      }
+    }
+
+    var objaa = {}
+
+    addPrivateProperty(objaa, 'Name', function(x) {
+      return typeof x === 'string'
+    })
+    objaa.setName('loveNanNan')
+    console.log(objaa.getName());
+
+    function constFun(x) {
+      return function() {
+        return x
+      }
+    }
+    let funs = [];
+    for (var i = 0; i < 5; i ++) {
+      funs[i] = constFun(i)
+    }
+    // console.log(funs);
+    console.log(funs[0]());
+
+    function trace(o, m) {
+      var original = o[m]
+      console.log(11);
+      o[m] = function() {
+        console.log(1);
+        console.log(new Date(), 'Entering: ' + m);
+        var result = original.apply(this, arguments)
+        console.log(this);
+        console.log(new Date(), 'Entering: ' + m);
+        console.log(arguments);
+        return result
+      }
+    }
+
+    var aa = {
+      m: function(x, y) {
+        let result = x + y
+        return result;
+      }
+    }
+
+    trace(aa, 'm')
+    console.log(aa['m']('aaaaa', 'bbbb'));
+
+    // 这个是待绑定的函数
+    function hehe(y) {
+      return this.x + y
+    }
+    var on = {
+      x: 6
+    }
+    var on1 = hehe.bind(on)
+    // console.log(hehe(3).bind(on));
+    console.log(on1(3));
+
+    // bind()方法的兼容写法
+    function bind(f, o) {
+      if (f.bind) {return f.bind(o)}
+      else {
+        return function() {
+          return f.apply(o, arguments);
+        }
+      }
+    }
+
+    var sum = function (x, y) {return x + y}
+    var succ = sum.bind(null, 1)
+    // console.log(succ(5, 8));
+
+    function not(f) {
+      return function () {
+        var result = f.apply(this, arguments);
+        return !result
+      }
+    }
+
+    var even = function() {
+      let args = []
+      for (let i = 0; i < arguments.length; i ++) {
+        arguments[i] % 2 === 0 ? args.push(arguments[i]) : null
+      }
+      return args
+    }
+
+    console.log(not(even).apply(this, [2, 4, 5, 7, 8]));
+  </script>
+</body>
+</html>

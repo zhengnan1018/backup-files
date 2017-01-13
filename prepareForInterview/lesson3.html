@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+
+  </body>
+  <script type="text/javascript">
+    // ECMAScript5 中的数组方法
+    // 1.forEach()
+    let data = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    let sum = 0;
+    data.forEach((num, index) => {
+      sum += num
+    })
+    console.log(sum);
+    data.forEach((num, index, arr) => {
+      arr[index] = num + 1
+    })
+    console.log(data);
+
+    // 2.map()
+    let data2 = data.map((val, index) => {
+      return val * val
+    })
+    console.log(data2);
+    console.log(data);
+
+    // 3.filter()
+    let data3 = data.filter((val, index) => {
+      return val % 2 === 0
+    })
+    console.log(data3);
+
+    // 4.every() some()
+    let flag1 = data.every((val) => {
+      return val < 12
+    })
+    console.log(flag1);
+
+    let flag2 = data.some((val) => {
+      return val % 3 === 0
+    })
+    console.log(flag2);
+
+    // 5.reduce() reduceRight()
+    sum = data.reduce((x, y) => {
+      return x + y
+    }, 0)
+    console.log(sum);
+
+    let product = data.reduce((x, y) => {
+      return x * y
+    }, 1)
+    console.log(product);
+
+    let max = data.reduce((x, y) => {
+      return x > y ? x : y
+    }, 1)
+    console.log(max);
+
+    let arr0 = [1, 2, 3]
+    product = arr0.reduceRight((x, y) => {
+      return Math.pow(x, y)
+    })
+    console.log(product);
+
+    let objs = [{a: 1}, {b: 2, d: 7}, {c: 3, e: 88}]
+    let unionObj = objs.reduce((obj1, obj2) => {
+      for(k in obj2) {
+        if (!obj1[k]) {
+          obj1[k] = obj2[k]
+        }
+      }
+      return obj1
+    }, {})
+    console.log(unionObj);
+
+    // 6.indexOf() lastIndexOf()
+    // 该方法的第二个参数指定开始搜索的位置
+    let arrBase = [2, 3, 6, 'a', 'v', 3]
+    console.log(arrBase.indexOf(3));
+    console.log(arrBase.lastIndexOf(3));
+
+    function findAll(arr, x) {
+      let result = []
+      let len = arr.length
+      let pos = 0
+      while(pos <= len) {
+        if (arr.indexOf(x, pos) === -1) break;
+        result.push(arr.indexOf(x, pos));
+        pos = arr.indexOf(x, pos) + 1;
+      }
+      return result
+    }
+    console.log(findAll(arrBase, 3));
+
+    let str2 = 'zhengnan'
+    console.log(str2.charAt(0));
+    console.log(str2[5]);
+  </script>
+</html>

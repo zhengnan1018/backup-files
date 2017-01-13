@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+  <head></head>
+  <script type="text/javascript">
+    // 通过原型继承创建一个新对象
+    function inherit(p) {
+      if (p === null) {
+        throw TypeError();
+      }
+      if (Object.create) {
+        return Object.create(p)
+      }
+      var t = typeof p
+      if (t !== 'object' && t !== 'function') {
+        throw TypeError();
+      }
+      function f() {}
+      f.prototype = p
+      return new f()
+    }
+
+    var o = {
+      x: 1,
+      y: 2
+    }
+
+    var o1 = inherit(o)
+    console.log(o1);
+
+    o1.x = 5
+    console.log(o1);
+
+    o.love = 'nan'
+    console.log(o1.hasOwnProperty('love'));
+    console.log(o.hasOwnProperty('love'));
+    console.log(o.propertyIsEnumerable('toString'));
+
+    console.log('love' in o1);
+
+    delete o1.x
+    console.log(o1.x);
+
+    // 用来枚举属性的对象工具函数
+    function extend(o, p) {
+      for (prop in p) {
+        o[prop] = p[prop]
+      }
+      return o
+    }
+
+    var loving = {
+      boy: 'pengpeng',
+      girl: 'nannan'
+    }
+
+    var lovingToo = {}
+    extend(lovingToo, loving)
+    console.log(lovingToo);
+
+    function merge(o, p) {
+      for (prop in p) {
+        if (o.hasOwnProperty(prop)) continue;
+        o[prop] = p[prop]
+      }
+      return o
+    }
+
+    var p = {
+      x: 1,
+      y: 2,
+
+      get r() {
+        return Math.sqrt(this.x * this.x + this.y * this.y)
+      },
+      set r(newVal) {
+        var oldVal = Math.sqrt(this.x * this.x + this.y * this.y)
+        var ratio = newVal / oldVal
+        this.x *= ratio
+        this.y *= ratio
+      },
+      get theta() {
+        return Math.atan2(this.y, this.x)
+      }
+    }
+
+    var q = inherit(p)
+    q.x = 3;
+    q.y = 4;
+    console.log(q.r);
+
+    var serialnum = {
+      $n: 0,
+      get next() {
+        return this.$n++;
+      },
+      set next(n) {
+        if (n >= this.$n) {
+          this.$n = n
+        } else {
+          throw '序列号的值不能比当前值小'
+        }
+      }
+    }
+
+    // console.log(serialnum.setNext(6));
+
+    console.log(serialnum.next);
+    console.log(serialnum.next);
+
+    var love = {}
+    Object.defineProperty(love, 'girl', {value: 'nannan', writable: true})
+    console.log(Object.getOwnPropertyDescriptor(love, 'girl'));
+    console.log(Object.getPrototypeOf(love));
+    console.log(Object.prototype.isPrototypeOf(love));
+
+    function classof(o) {
+      if (o === null) return 'Null';
+      if (o === undefined) return 'Undefined';
+      console.log(Object.prototype.toString.call(o));
+      return Object.prototype.toString.call(o).slice(8, -1);
+    }
+
+    // classof(null)
+
+    var pengpeng = {
+      gender: 'male',
+      age: 22,
+      love: {
+        girl: 'nannan',
+        hobbies: ['music', 'movie']
+      }
+    }
+
+    console.log(new Date().toLocaleString());
+    console.log([1, 2].toLocaleString());
+    console.log({a: 1}.toLocaleString());
+
+    var peng = JSON.stringify(pengpeng)
+    console.log(typeof peng);
+    var peng1 = JSON.parse(peng)
+    console.log(peng1);
+
+    arr1 = []
+    arr1[2] = 'a'
+    arr1['3'] = 'b'
+    arr1['cc'] = 'c'
+    console.log(arr1);
+    console.log(arr1[3]);
+    console.log(typeof arr1);
+    console.log(Object.prototype.toString.call(arr1));
+
+  </script>
+</html>

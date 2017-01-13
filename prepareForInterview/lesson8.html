@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+
+</body>
+<script type="text/javascript">
+  function group(num) {
+    // console.log(num.toString());
+    return num && num.toString()
+      .replace(/(\d)(?=(\d{3})+\.)/g, function($1, $2){
+        // console.log($1);
+        return $2 + ','
+      })
+  }
+
+//   function commafy(num){
+//     return num && num
+//         .toString()
+//         .replace(/(\d)(?=(\d{3})+\.)/g, function($1, $2){
+//             console.log($1);
+//             return $2 + ',';
+//         });
+// }
+
+  console.log(group(123456789.3));
+
+  // 实现数组的随机排序
+  var arr1 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+  console.log(Array.prototype.splice.call(arr1, 3, 1));
+
+  function randSort(arr) {
+    var mixedArr = [];
+    while(arr.length > 0) {
+      console.log('aa');
+      var temIndex = parseInt(Math.random() * arr.length);
+      console.log(temIndex);
+      mixedArr.push(arr[temIndex]);
+      // arr.splice(temIndex, 1)
+      Array.prototype.splice.call(arr, temIndex, 1);
+    }
+    return mixedArr
+  }
+
+  console.log(randSort(arr1));
+
+  // 实现字符串反转
+  function reverse(str) {
+    var reverseStr = ''
+    if (str && typeof str === 'string') {
+      // console.log(str.split(''));
+      var temArr = [];
+      str.split('').map((letter, index) => {
+        temArr[str.split('').length - index] = letter
+      })
+      return temArr.join('')
+    }
+   }
+
+  console.log(reverse('123'));
+
+  // 0 1 1 2 3 5 8 13 21 34 55 89
+  function fn(n) {
+    let num
+    let resultArr = []
+    resultArr[0] = 0
+    resultArr[1] = 1
+    for(let i = 2; i <= n; i ++) {
+      resultArr[i] = resultArr[i-1] + resultArr[i-2]
+    }
+    return resultArr[n]
+  }
+
+  console.log(fn(6));
+
+</script>
+</html>
